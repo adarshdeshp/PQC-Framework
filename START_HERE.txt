@@ -1,0 +1,16 @@
+PQC PROJECT - START HERE
+========================
+
+1. Read PROJECT_EXPLAINED_SIMPLE.pdf first. It explains the whole project
+   in simple words, how to present it, and answers to likely questions.
+
+2. To show results WITHOUT running anything, open the files in sample_output/:
+     demo_phase1_output.txt      - Phase 1 demo
+     demo_phase2_output.txt      - Phase 2 demo
+     benchmark_output.txt        - speed and size of every algorithm
+     evaluate_phase2_output.txt  - our main results (80% saving, re-wrap speed)
+     tests_output.txt            - 31 tests passed
+
+3. Code is in pqcf/ (one file per feature). README.md has the status table.
+
+4. To run it yourself you need Linux or WSL (see README.md -> Setup).

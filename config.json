@@ -1,0 +1,5 @@
+{
+  "kem": "X25519+ML-KEM-768",
+  "kem_fallbacks": ["X25519+FrodoKEM-976-AES"],
+  "signature": "ML-DSA-65"
+}

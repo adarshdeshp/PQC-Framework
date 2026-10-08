@@ -1,0 +1,54 @@
+
+==============================================================================
+ 1. MOSCA RISK POLICY  (X + Y > Z  with Y=3y migration, Z=12y to Q-day)
+==============================================================================
+Data                       Shelf life Sensitivity  Margin  Decision    Reason
+OTP code                   5 min      low             -9y  CLASSICAL   expires 9y before Q-day; classical is sufficient
+Login session token        1 day      medium          -9y  CLASSICAL   expires 9y before Q-day; classical is sufficient
+Chat message               2 yrs      medium          -7y  CLASSICAL   expires 7y before Q-day; classical is sufficient
+E-commerce order history   5 yrs      medium          -4y  CLASSICAL   expires 4y before Q-day; classical is sufficient
+Bank transaction records   10 yrs     high             1y  HYBRID      exposed by 1y
+Legal contract             25 yrs     high            16y  HYBRID-HIGH exposed by 16y and/or critical; maximum protection
+Medical record             50 yrs     critical        41y  HYBRID-HIGH exposed by 41y and/or critical; maximum protection
+Government ID record       70 yrs     critical        61y  HYBRID-HIGH exposed by 61y and/or critical; maximum protection
+
+Same data under different Q-day assumptions (Z):
+  aggressive  Z= 8y -> 4 of 8 data types exposed today
+  moderate    Z=12y -> 4 of 8 data types exposed today
+  optimistic  Z=20y -> 3 of 8 data types exposed today
+
+==============================================================================
+ 2. MIGRATING STORED DATA BY KEY RE-WRAPPING
+==============================================================================
+8 records stored today with legacy X25519 (quantum-vulnerable)
+Policy engine says 4 records must migrate, in this order:
+  1. Government ID record       -> X25519+ML-KEM-1024   (margin 61y)
+  2. Medical record             -> X25519+ML-KEM-1024   (margin 41y)
+  3. Legal contract             -> X25519+ML-KEM-1024   (margin 16y)
+  4. Bank transaction records   -> X25519+ML-KEM-768    (margin 1y)
+
+  Government ID record       re-wrapped in   0.38 ms | payload unchanged: True | readable: True
+  Medical record             re-wrapped in   0.28 ms | payload unchanged: True | readable: True
+  Legal contract             re-wrapped in   0.30 ms | payload unchanged: True | readable: True
+  Bank transaction records   re-wrapped in   0.31 ms | payload unchanged: True | readable: True
+
+Only the 32-byte data key was re-protected; the encrypted data itself was never touched.
+
+==============================================================================
+ 3. ALGORITHM COMPROMISE: 'ML-KEM has been broken'
+==============================================================================
+Active KEM before : X25519+ML-KEM-768
+Blocked now       : ML-KEM-1024, ML-KEM-512, ML-KEM-768, X25519+ML-KEM-1024, X25519+ML-KEM-768
+Active KEM after  : X25519+FrodoKEM-976-AES   (fallback active: X25519+ML-KEM-768 blocked -> using X25519+FrodoKEM-976-AES)
+New session works : True  (no code change, no downtime)
+
+==============================================================================
+ 4. DOWNGRADE ATTACK ON ALGORITHM NEGOTIATION
+==============================================================================
+Honest network, protected client       -> agreed on X25519+ML-KEM-1024   [quantum-safe]
+Attacker in middle, NAIVE client       -> agreed on X25519               [DOWNGRADED to quantum-breakable crypto]
+Attacker in middle, PROTECTED client   -> ATTACK DETECTED, handshake aborted (Signed transcript does not match the offer we sent - handshake modified in transit)
+
+==============================================================================
+ PHASE 2 DEMO COMPLETE
+==============================================================================

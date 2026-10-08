@@ -1,0 +1,39 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/claude/pqc-framework
+collecting ... collected 31 items
+
+tests/test_phase1.py::test_kem_roundtrip[X25519] PASSED                  [  3%]
+tests/test_phase1.py::test_kem_roundtrip[RSA-3072] PASSED                [  6%]
+tests/test_phase1.py::test_kem_roundtrip[ML-KEM-512] PASSED              [  9%]
+tests/test_phase1.py::test_kem_roundtrip[ML-KEM-768] PASSED              [ 12%]
+tests/test_phase1.py::test_kem_roundtrip[ML-KEM-1024] PASSED             [ 16%]
+tests/test_phase1.py::test_kem_roundtrip[X25519+ML-KEM-768] PASSED       [ 19%]
+tests/test_phase1.py::test_kem_roundtrip[X25519+ML-KEM-1024] PASSED      [ 22%]
+tests/test_phase1.py::test_kem_roundtrip[FrodoKEM-976-AES] PASSED        [ 25%]
+tests/test_phase1.py::test_kem_roundtrip[X25519+FrodoKEM-976-AES] PASSED [ 29%]
+tests/test_phase1.py::test_signature_valid_and_forged[Ed25519] PASSED    [ 32%]
+tests/test_phase1.py::test_signature_valid_and_forged[ML-DSA-44] PASSED  [ 35%]
+tests/test_phase1.py::test_signature_valid_and_forged[ML-DSA-65] PASSED  [ 38%]
+tests/test_phase1.py::test_fips203_sizes PASSED                          [ 41%]
+tests/test_phase1.py::test_hybrid_depends_on_both_components PASSED      [ 45%]
+tests/test_phase1.py::test_aead_tamper_detected PASSED                   [ 48%]
+tests/test_phase1.py::test_config_driven_agility PASSED                  [ 51%]
+tests/test_phase1.py::test_unknown_algorithm_rejected PASSED             [ 54%]
+tests/test_phase2.py::test_short_lived_data_stays_classical PASSED       [ 58%]
+tests/test_phase2.py::test_long_lived_critical_data_gets_max_protection PASSED [ 61%]
+tests/test_phase2.py::test_mosca_inequality_boundary PASSED              [ 64%]
+tests/test_phase2.py::test_high_sensitivity_gets_hybrid_even_if_not_exposed PASSED [ 67%]
+tests/test_phase2.py::test_migration_plan_most_exposed_first_and_skips_safe PASSED [ 70%]
+tests/test_phase2.py::test_rewrap_keeps_payload_and_stays_readable PASSED [ 74%]
+tests/test_phase2.py::test_old_key_cannot_open_rewrapped_record PASSED   [ 77%]
+tests/test_phase2.py::test_record_id_is_bound PASSED                     [ 80%]
+tests/test_phase2.py::test_family_compromise_blocks_hybrids_and_falls_back PASSED [ 83%]
+tests/test_phase2.py::test_no_fallback_left_raises PASSED                [ 87%]
+tests/test_phase2.py::test_honest_handshake_picks_strongest PASSED       [ 90%]
+tests/test_phase2.py::test_naive_client_is_downgraded PASSED             [ 93%]
+tests/test_phase2.py::test_protected_client_detects_downgrade PASSED     [ 96%]
+tests/test_phase2.py::test_quantum_safe_policy_rejects_classical PASSED  [100%]
+
+============================== 31 passed in 0.29s ==============================

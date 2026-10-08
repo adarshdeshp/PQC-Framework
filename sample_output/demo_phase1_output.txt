@@ -1,0 +1,49 @@
+
+======================================================================
+ 1. REGISTERED ALGORITHMS (crypto-agility registry)
+======================================================================
+Algorithm             Type      Family         Quantum-safe
+X25519                KEM       classical      NO (Shor)
+RSA-3072              KEM       classical      NO (Shor)
+ML-KEM-512            KEM       post-quantum   YES
+ML-KEM-768            KEM       post-quantum   YES
+ML-KEM-1024           KEM       post-quantum   YES
+X25519+ML-KEM-768     KEM       hybrid         YES
+X25519+ML-KEM-1024    KEM       hybrid         YES
+FrodoKEM-976-AES      KEM       post-quantum   YES
+X25519+FrodoKEM-976-AESKEM       hybrid         YES
+Ed25519               SIG       classical      NO (Shor)
+ML-DSA-44             SIG       post-quantum   YES
+ML-DSA-65             SIG       post-quantum   YES
+
+======================================================================
+ 2. HYBRID SECURE SESSION (config.json -> X25519 + ML-KEM-768)
+======================================================================
+Active KEM       : X25519+ML-KEM-768
+Active signature : ML-DSA-65
+Public key size  : 1224 bytes
+Ciphertext size  : 1128 bytes
+Signature size   : 3309 bytes
+Client secret    : 963cd14de57b96e921b8bb37778ba35e...
+Server secret    : 963cd14de57b96e921b8bb37778ba35e...
+Secrets match    : True
+
+Encrypted (AES-256-GCM) : 97964990042921cdd8aa085b7db1cace488f9454bea8979d...
+Decrypted by server     : Patient record #4471 - retention: 50 years
+
+======================================================================
+ 3. CRYPTO-AGILITY: same function, algorithm swapped by name only
+======================================================================
+X25519               + Ed25519    -> secrets match: True  [NOT quantum-safe]
+ML-KEM-768           + ML-DSA-65  -> secrets match: True  [quantum-safe]
+X25519+ML-KEM-768    + ML-DSA-65  -> secrets match: True  [quantum-safe]
+
+======================================================================
+ 4. TAMPER DETECTION
+======================================================================
+Tampered ciphertext rejected by AES-GCM authentication -> OK
+Forged handshake signature : rejected -> OK
+
+======================================================================
+ PHASE 1 DEMO COMPLETE
+======================================================================
